@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // ============================================
     const galleryData = [
         // Lash Extensions
-        { id: 1, title: 'Classic Lash Set', category: 'lashes', image: 'assets/images/gallery/Lash-1.jpeg' },
+        { id: 1, title: 'Classic Lash Set', category: 'lashes', image: 'Lash-1.jpeg' },
         { id: 2, title: 'Hybrid Lash Set', category: 'lashes', image: 'assets/images/gallery/Lash-2.jfif' },
         { id: 3, title: 'Volume Lash Set', category: 'lashes', image: 'assets/images/gallery/Lash-3.jfif' },
         { id: 4, title: 'Wispy Lash Effect', category: 'lashes', image: 'assets/images/gallery/Lash-4.jfif' },
