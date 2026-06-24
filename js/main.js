@@ -275,7 +275,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 // ============================================
-// CUSTOMER REVIEWS
+// CUSTOMER REVIEWS - COMPLETE WORKING VERSION
 // ============================================
 
 // Initialize reviews from localStorage or use defaults
@@ -387,46 +387,78 @@ function formatDate(dateString) {
     });
 }
 
-// Handle star rating
+// ============================================
+// STAR RATING - FIXED VERSION
+// ============================================
+
 function setupStarRating() {
     const stars = document.querySelectorAll('.star-rating i');
     const ratingInput = document.getElementById('reviewRatingValue');
     const ratingText = document.getElementById('ratingText');
-
+    
     if (!stars.length) return;
 
+    // Rating labels with emojis
+    const ratingLabels = {
+        0: 'Select a rating',
+        1: 'Poor 😕',
+        2: 'Fair 😐',
+        3: 'Good 🙂',
+        4: 'Very Good 😊',
+        5: 'Excellent 🤩'
+    };
+
+    // Function to update stars based on rating
+    function updateStars(rating) {
+        stars.forEach(star => {
+            const starRating = parseInt(star.dataset.rating);
+            if (starRating <= rating) {
+                star.classList.add('active');
+                star.style.color = '#FFB800';
+            } else {
+                star.classList.remove('active');
+                star.style.color = '#ddd';
+            }
+        });
+    }
+
+    // Click event - set rating
     stars.forEach(star => {
         star.addEventListener('click', function() {
             const rating = parseInt(this.dataset.rating);
             ratingInput.value = rating;
-            
-            // Update stars
-            stars.forEach(s => {
-                s.classList.toggle('active', parseInt(s.dataset.rating) <= rating);
-            });
-
-            // Update rating text
-            const texts = ['', 'Poor', 'Fair', 'Good', 'Very Good', 'Excellent'];
-            ratingText.textContent = texts[rating] || 'Select a rating';
+            updateStars(rating);
+            ratingText.textContent = ratingLabels[rating] || 'Select a rating';
         });
 
+        // Hover effect
         star.addEventListener('mouseenter', function() {
             const rating = parseInt(this.dataset.rating);
             stars.forEach(s => {
-                s.style.color = parseInt(s.dataset.rating) <= rating ? '#FFB800' : '#ddd';
+                const starRating = parseInt(s.dataset.rating);
+                if (starRating <= rating) {
+                    s.style.color = '#FFB800';
+                } else {
+                    s.style.color = '#ddd';
+                }
             });
         });
 
         star.addEventListener('mouseleave', function() {
-            const currentRating = parseInt(ratingInput.value);
-            stars.forEach(s => {
-                s.style.color = parseInt(s.dataset.rating) <= currentRating ? '#FFB800' : '#ddd';
-            });
+            const currentRating = parseInt(ratingInput.value) || 0;
+            updateStars(currentRating);
         });
     });
+
+    // Initialize with default (no rating)
+    updateStars(0);
+    ratingText.textContent = ratingLabels[0];
 }
 
-// Handle review submission
+// ============================================
+// REVIEW FORM SUBMISSION
+// ============================================
+
 function setupReviewForm() {
     const form = document.getElementById('reviewForm');
     if (!form) return;
@@ -488,7 +520,7 @@ function addReview(review) {
         <i class="fas fa-check-circle"></i>
         <h3>Thank You for Your Review! 🎉</h3>
         <p>Your feedback means the world to us at VeeBeautyBar.</p>
-        <button class="btn btn-outline" onclick="this.parentElement.remove(); document.getElementById('reviewForm').reset(); location.reload();">
+        <button class="btn btn-outline" onclick="location.reload();">
             <i class="fas fa-plus"></i> Write Another Review
         </button>
     `;
@@ -499,23 +531,24 @@ function addReview(review) {
     // Reset form
     form.reset();
     document.getElementById('reviewRatingValue').value = '0';
-    document.querySelectorAll('.star-rating i').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.star-rating i').forEach(s => {
+        s.classList.remove('active');
+        s.style.color = '#ddd';
+    });
     document.getElementById('ratingText').textContent = 'Select a rating';
     
     // Scroll to reviews
     document.getElementById('reviewsGrid').scrollIntoView({ behavior: 'smooth' });
 }
 
-// Initialize reviews on page load
+// ============================================
+// INITIALIZE REVIEWS ON PAGE LOAD
+// ============================================
+
 document.addEventListener('DOMContentLoaded', function() {
     loadReviews();
     renderReviews();
     setupStarRating();
     setupReviewForm();
 });
-
-
-
-
-
 
