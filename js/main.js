@@ -57,12 +57,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // ============================================
     const galleryData = [
         // Lash Extensions
-        { id: 1, title: 'Classic Lash Set', category: 'lashes', image: 'Lash-1.jpeg' },
-        { id: 2, title: 'Hybrid Lash Set', category: 'lashes', image: 'Lash-2.jfif' },
-        { id: 3, title: 'Volume Lash Set', category: 'lashes', image: 'Lash-3.jfif' },
-        { id: 4, title: 'Wispy Lash Effect', category: 'lashes', image: 'Lash-4.jfif' },
-        { id: 5, title: 'Custom Lash Design', category: 'lashes', image: 'Lash-5.jfif' },
-        { id: 6, title: 'Bottom Lashes', category: 'lashes', image: 'Lash-6.jfif' },
+        { id: 1, title: 'Classic Lash Set', category: 'lashes', image: 'assets/images/gallery/Lash-1.jpeg' },
+        { id: 2, title: 'Hybrid Lash Set', category: 'lashes', image: 'assets/images/gallery/Lash-2.jfif' },
+        { id: 3, title: 'Volume Lash Set', category: 'lashes', image: 'assets/images/gallery/Lash-3.jfif' },
+        { id: 4, title: 'Wispy Lash Effect', category: 'lashes', image: 'assets/images/gallery/Lash-4.jfif' },
+        { id: 5, title: 'Custom Lash Design', category: 'lashes', image: 'assets/images/gallery/Lash-5.jfif' },
+        { id: 6, title: 'Bottom Lashes', category: 'lashes', image: 'assets/images/gallery/Lash-6.jfif' },
         
         // Brow Services
         { id: 7, title: 'Brow Lamination', category: 'brows', image: 'assets/images/gallery/brow-1.jpg' },
