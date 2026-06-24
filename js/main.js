@@ -56,46 +56,34 @@ document.addEventListener('DOMContentLoaded', function() {
     // GALLERY DATA
     // ============================================
     const galleryData = [
-        // Lash Extensions
         { id: 1, title: 'Classic Lash Set', category: 'lashes', image: 'Lash-1.jpeg' },
         { id: 2, title: 'Hybrid Lash Set', category: 'lashes', image: 'Lash-2.jfif' },
         { id: 3, title: 'Volume Lash Set', category: 'lashes', image: 'Lash-3.jfif' },
         { id: 4, title: 'Wispy Lash Effect', category: 'lashes', image: 'Lash-4.jfif' },
         { id: 5, title: 'Custom Lash Design', category: 'lashes', image: 'Lash-5.jfif' },
         { id: 6, title: 'Bottom Lashes', category: 'lashes', image: 'Lash-6.jfif' },
-        
-        // Brow Services
         { id: 7, title: 'Brow Lamination', category: 'brows', image: 'https://placehold.co/400x400/F8BBD0/000000?text=Brow+Lamination' },
         { id: 8, title: 'Brow Lamination & Tint', category: 'brows', image: 'https://placehold.co/400x400/F8BBD0/000000?text=Brow+%26+Tint' },
         { id: 9, title: 'Brow Grooming', category: 'brows', image: 'https://placehold.co/400x400/F8BBD0/000000?text=Brow+Grooming' },
         { id: 10, title: 'Brow Shaping', category: 'brows', image: 'https://placehold.co/400x400/F8BBD0/000000?text=Brow+Shaping' },
-        
-        // Bridal
         { id: 11, title: 'Bridal Lash Set', category: 'bridal', image: 'https://placehold.co/400x400/F8BBD0/000000?text=Bridal+Lashes' },
         { id: 12, title: 'Bridal Makeup & Lashes', category: 'bridal', image: 'https://placehold.co/400x400/F8BBD0/000000?text=Bridal+Makeup' },
         { id: 13, title: 'Wedding Day Glam', category: 'bridal', image: 'https://placehold.co/400x400/F8BBD0/000000?text=Wedding+Glam' },
         { id: 14, title: 'Bridal Brow & Lash', category: 'bridal', image: 'https://placehold.co/400x400/F8BBD0/000000?text=Bridal+Brow' },
     ];
 
-    // ===== RENDER GALLERY =====
     const galleryGrid = document.getElementById('galleryGrid');
     const loadMoreBtn = document.getElementById('loadMoreGallery');
     let visibleCount = 6;
     let currentFilter = 'all';
 
     function renderGalleryItems(filter = 'all', count = visibleCount) {
-        const filtered = filter === 'all' 
-            ? galleryData 
-            : galleryData.filter(item => item.category === filter);
-        
+        const filtered = filter === 'all' ? galleryData : galleryData.filter(item => item.category === filter);
         const itemsToShow = filtered.slice(0, count);
         
         galleryGrid.innerHTML = itemsToShow.map(item => `
             <div class="gallery-item" data-category="${item.category}" data-id="${item.id}">
-                <img src="${item.image}" alt="${item.title}" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
-                <div class="placeholder" style="display:none;">
-                    <i class="fas fa-image"></i>
-                </div>
+                <img src="${item.image}" alt="${item.title}" loading="lazy">
                 <span class="category-badge">${item.category}</span>
                 <div class="gallery-item-overlay">
                     <h4>${item.title}</h4>
@@ -108,27 +96,19 @@ document.addEventListener('DOMContentLoaded', function() {
             item.addEventListener('click', function() {
                 const id = parseInt(this.dataset.id);
                 const index = galleryData.findIndex(g => g.id === id);
-                if (index !== -1) {
-                    openLightbox(index);
-                }
+                if (index !== -1) openLightbox(index);
             });
         });
 
         if (loadMoreBtn) {
             const totalFiltered = filter === 'all' ? galleryData.length : galleryData.filter(item => item.category === filter).length;
-            if (count >= totalFiltered) {
-                loadMoreBtn.style.display = 'none';
-            } else {
-                loadMoreBtn.style.display = 'inline-flex';
-            }
+            loadMoreBtn.style.display = count >= totalFiltered ? 'none' : 'inline-flex';
         }
     }
 
-    // ===== FILTER BUTTONS =====
-    const filterBtns = document.querySelectorAll('.filter-btn');
-    filterBtns.forEach(btn => {
+    document.querySelectorAll('.filter-btn').forEach(btn => {
         btn.addEventListener('click', function() {
-            filterBtns.forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
             this.classList.add('active');
             currentFilter = this.dataset.filter;
             visibleCount = 6;
@@ -136,7 +116,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // ===== LOAD MORE =====
     if (loadMoreBtn) {
         loadMoreBtn.addEventListener('click', function() {
             visibleCount += 6;
@@ -146,9 +125,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     renderGalleryItems('all', visibleCount);
 
-    // ============================================
-    // LIGHTBOX
-    // ============================================
+    // ===== LIGHTBOX =====
     const lightbox = document.getElementById('lightbox');
     const lightboxImage = document.getElementById('lightboxImage');
     const lightboxCaption = document.getElementById('lightboxCaption');
@@ -159,7 +136,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function openLightbox(index) {
         currentIndex = index;
-        updateLightbox();
+        const item = galleryData[currentIndex];
+        lightboxImage.src = item.image;
+        lightboxCaption.textContent = `${item.title} · ${item.category}`;
         lightbox.classList.add('active');
         document.body.style.overflow = 'hidden';
     }
@@ -169,99 +148,40 @@ document.addEventListener('DOMContentLoaded', function() {
         document.body.style.overflow = '';
     }
 
-    function updateLightbox() {
-        const item = galleryData[currentIndex];
-        if (item) {
+    function navigateLightbox(direction) {
+        const filtered = currentFilter === 'all' ? galleryData : galleryData.filter(item => item.category === currentFilter);
+        const currentItem = galleryData[currentIndex];
+        const filteredIndex = filtered.findIndex(item => item.id === currentItem.id);
+        let newFilteredIndex = filteredIndex + direction;
+        if (newFilteredIndex < 0) newFilteredIndex = filtered.length - 1;
+        if (newFilteredIndex >= filtered.length) newFilteredIndex = 0;
+        const newItem = filtered[newFilteredIndex];
+        const newGlobalIndex = galleryData.findIndex(item => item.id === newItem.id);
+        if (newGlobalIndex !== -1) {
+            currentIndex = newGlobalIndex;
+            const item = galleryData[currentIndex];
             lightboxImage.src = item.image;
-            lightboxImage.alt = item.title;
             lightboxCaption.textContent = `${item.title} · ${item.category}`;
         }
     }
 
-    function navigateLightbox(direction) {
-        const filtered = currentFilter === 'all' 
-            ? galleryData 
-            : galleryData.filter(item => item.category === currentFilter);
-        
-        if (filtered.length === 0) return;
-        
-        const currentItem = galleryData[currentIndex];
-        const filteredIndex = filtered.findIndex(item => item.id === currentItem.id);
-        
-        if (filteredIndex === -1) return;
-        
-        let newFilteredIndex = filteredIndex + direction;
-        if (newFilteredIndex < 0) newFilteredIndex = filtered.length - 1;
-        if (newFilteredIndex >= filtered.length) newFilteredIndex = 0;
-        
-        const newItem = filtered[newFilteredIndex];
-        const newGlobalIndex = galleryData.findIndex(item => item.id === newItem.id);
-        
-        if (newGlobalIndex !== -1) {
-            currentIndex = newGlobalIndex;
-            updateLightbox();
-        }
-    }
-
-    if (lightboxClose) {
-        lightboxClose.addEventListener('click', closeLightbox);
-    }
-
-    if (lightboxPrev) {
-        lightboxPrev.addEventListener('click', function(e) {
-            e.stopPropagation();
-            navigateLightbox(-1);
-        });
-    }
-
-    if (lightboxNext) {
-        lightboxNext.addEventListener('click', function(e) {
-            e.stopPropagation();
-            navigateLightbox(1);
-        });
-    }
-
-    lightbox.addEventListener('click', function(e) {
-        if (e.target === this) {
-            closeLightbox();
-        }
-    });
-
+    lightboxClose.addEventListener('click', closeLightbox);
+    lightboxPrev.addEventListener('click', function(e) { e.stopPropagation(); navigateLightbox(-1); });
+    lightboxNext.addEventListener('click', function(e) { e.stopPropagation(); navigateLightbox(1); });
+    lightbox.addEventListener('click', function(e) { if (e.target === this) closeLightbox(); });
     document.addEventListener('keydown', function(e) {
         if (!lightbox.classList.contains('active')) return;
-        
-        if (e.key === 'Escape') {
-            closeLightbox();
-        } else if (e.key === 'ArrowLeft') {
-            navigateLightbox(-1);
-        } else if (e.key === 'ArrowRight') {
-            navigateLightbox(1);
-        }
+        if (e.key === 'Escape') closeLightbox();
+        else if (e.key === 'ArrowLeft') navigateLightbox(-1);
+        else if (e.key === 'ArrowRight') navigateLightbox(1);
     });
 
     // ============================================
     // CUSTOMER REVIEWS - COMPLETE WORKING VERSION
     // ============================================
 
-    // Initialize reviews from localStorage or use defaults
     let reviews = [];
 
-    // Load reviews from localStorage
-    function loadReviews() {
-        const stored = localStorage.getItem('veebeautybar_reviews');
-        if (stored) {
-            try {
-                reviews = JSON.parse(stored);
-            } catch (e) {
-                reviews = getDefaultReviews();
-            }
-        } else {
-            reviews = getDefaultReviews();
-        }
-        return reviews;
-    }
-
-    // Default reviews (sample data)
     function getDefaultReviews() {
         return [
             {
@@ -294,12 +214,39 @@ document.addEventListener('DOMContentLoaded', function() {
         ];
     }
 
-    // Save reviews to localStorage
+    function loadReviews() {
+        const stored = localStorage.getItem('veebeautybar_reviews');
+        if (stored) {
+            try {
+                reviews = JSON.parse(stored);
+            } catch (e) {
+                reviews = getDefaultReviews();
+            }
+        } else {
+            reviews = getDefaultReviews();
+        }
+        return reviews;
+    }
+
     function saveReviews() {
         localStorage.setItem('veebeautybar_reviews', JSON.stringify(reviews));
     }
 
-    // Render reviews
+    function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('en-NG', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+    }
+
     function renderReviews() {
         const grid = document.getElementById('reviewsGrid');
         if (!grid) return;
@@ -315,7 +262,6 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        // Sort by date (newest first)
         const sorted = [...reviews].sort((a, b) => new Date(b.date) - new Date(a.date));
 
         grid.innerHTML = sorted.map(review => `
@@ -335,27 +281,7 @@ document.addEventListener('DOMContentLoaded', function() {
         `).join('');
     }
 
-    // Helper: Escape HTML
-    function escapeHtml(text) {
-        const div = document.createElement('div');
-        div.textContent = text;
-        return div.innerHTML;
-    }
-
-    // Helper: Format date
-    function formatDate(dateString) {
-        const date = new Date(dateString);
-        return date.toLocaleDateString('en-NG', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        });
-    }
-
-    // ============================================
-    // STAR RATING - FIXED VERSION
-    // ============================================
-
+    // ===== STAR RATING =====
     function setupStarRating() {
         const stars = document.querySelectorAll('.star-rating i');
         const ratingInput = document.getElementById('reviewRatingValue');
@@ -363,7 +289,6 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (!stars.length) return;
 
-        // Rating labels with emojis
         const ratingLabels = {
             0: 'Select a rating',
             1: 'Poor 😕',
@@ -373,7 +298,6 @@ document.addEventListener('DOMContentLoaded', function() {
             5: 'Excellent 🤩'
         };
 
-        // Function to update stars based on rating
         function updateStars(rating) {
             stars.forEach(star => {
                 const starRating = parseInt(star.dataset.rating);
@@ -387,7 +311,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
 
-        // Click event - set rating
         stars.forEach(star => {
             star.addEventListener('click', function() {
                 const rating = parseInt(this.dataset.rating);
@@ -396,16 +319,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 ratingText.textContent = ratingLabels[rating] || 'Select a rating';
             });
 
-            // Hover effect
             star.addEventListener('mouseenter', function() {
                 const rating = parseInt(this.dataset.rating);
                 stars.forEach(s => {
-                    const starRating = parseInt(s.dataset.rating);
-                    if (starRating <= rating) {
-                        s.style.color = '#FFB800';
-                    } else {
-                        s.style.color = '#ddd';
-                    }
+                    s.style.color = parseInt(s.dataset.rating) <= rating ? '#FFB800' : '#ddd';
                 });
             });
 
@@ -415,15 +332,11 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
 
-        // Initialize with default (no rating)
         updateStars(0);
         ratingText.textContent = ratingLabels[0];
     }
 
-    // ============================================
-    // REVIEW FORM SUBMISSION
-    // ============================================
-
+    // ===== REVIEW FORM SUBMISSION =====
     function setupReviewForm() {
         const form = document.getElementById('reviewForm');
         if (!form) return;
@@ -431,20 +344,17 @@ document.addEventListener('DOMContentLoaded', function() {
         form.addEventListener('submit', function(e) {
             e.preventDefault();
 
-            // Get form data
             const name = document.getElementById('reviewerName').value.trim();
             const service = document.getElementById('reviewerService').value;
             const rating = parseInt(document.getElementById('reviewRatingValue').value);
             const text = document.getElementById('reviewText').value.trim();
             const imageFile = document.getElementById('reviewImage').files[0];
 
-            // Validate
             if (!name || !service || !rating || !text) {
                 alert('Please fill in all required fields (Name, Service, Rating, and Review)');
                 return;
             }
 
-            // Create review object
             const newReview = {
                 id: Date.now(),
                 name: name,
@@ -455,7 +365,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 date: new Date().toISOString()
             };
 
-            // Handle image upload
             if (imageFile) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
@@ -469,21 +378,16 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Add review and update UI
     function addReview(review) {
         reviews.unshift(review);
         saveReviews();
         renderReviews();
         
-        // Show success message
         const form = document.getElementById('reviewForm');
         const container = form.parentElement;
         
-        // Remove any existing success message
         const existingSuccess = container.querySelector('.review-success');
-        if (existingSuccess) {
-            existingSuccess.remove();
-        }
+        if (existingSuccess) existingSuccess.remove();
         
         const success = document.createElement('div');
         success.className = 'review-success show';
@@ -499,7 +403,6 @@ document.addEventListener('DOMContentLoaded', function() {
         form.style.display = 'none';
         container.appendChild(success);
         
-        // Reset form
         form.reset();
         document.getElementById('reviewRatingValue').value = '0';
         document.querySelectorAll('.star-rating i').forEach(s => {
@@ -508,40 +411,14 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         document.getElementById('ratingText').textContent = 'Select a rating';
         
-        // Scroll to reviews
         document.getElementById('reviewsGrid').scrollIntoView({ behavior: 'smooth' });
     }
 
-    // ============================================
-    // INITIALIZE REVIEWS ON PAGE LOAD
-    // ============================================
-
-    // Initialize reviews
+    // ===== INITIALIZE =====
     loadReviews();
     renderReviews();
     setupStarRating();
     setupReviewForm();
-
-    // ============================================
-    // WHATSAPP BUTTON TRACKING
-    // ============================================
-    const whatsappFloat = document.querySelector('.whatsapp-float');
-    if (whatsappFloat) {
-        whatsappFloat.addEventListener('click', function() {
-            console.log('WhatsApp button clicked');
-        });
-    }
-
-    // ============================================
-    // BOOKING BUTTONS TRACKING
-    // ============================================
-    document.querySelectorAll('.booking-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const method = this.classList.contains('google-btn') ? 'Google Form' :
-                          this.classList.contains('whatsapp-btn') ? 'WhatsApp' : 'Phone Call';
-            console.log(`Booking method selected: ${method}`);
-        });
-    });
 
     console.log('VeeBeautyBar website loaded successfully! ✨');
 });
