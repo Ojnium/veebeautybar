@@ -25,7 +25,6 @@
     <nav class="navbar" id="navbar">
         <div class="container">
             <div class="logo">
-                <img src="assets/images/logo.jpeg" alt="VeeBeautyBar" style="height: 40px;">
                 <a href="#home">Vee<span>BeautyBar</span></a>
             </div>
             <button class="hamburger" id="hamburger" aria-label="Toggle menu">
@@ -37,6 +36,7 @@
                 <a href="#services">Services</a>
                 <a href="#gallery">Gallery</a>
                 <a href="#about">About</a>
+                <a href="#reviews">Reviews</a>
                 <a href="#training">Training</a>
                 <a href="#contact">Contact</a>
                 <a href="#booking" class="btn btn-pink btn-sm">Book Now</a>
@@ -79,14 +79,11 @@
                         </div>
                     </div>
                 </div>
-                <!-- Replace the placeholder with this: -->
-                    <div class="hero-image" style="background-image: url('assets/images/hero-bg.jfif'); background-size: cover; background-position: center; border-radius: 30px; min-height: 400px;">
-                        <!-- Optional overlay content -->
-                        <div style="background: rgba(248, 187, 208, 0.4); padding: 3rem; border-radius: 30px; text-align: center; width: 100%;">
-                            <i class="fas fa-spa" style="font-size: 4rem; color: #000;"></i>
-                            <p style="font-size: 1.5rem; font-weight: 600;">Enhancing Your Natural Beauty</p>
-                            <span>Confidence in Every Blink</span>
-                        </div>
+                <div class="hero-image">
+                    <div class="hero-image-placeholder">
+                        <i class="fas fa-spa"></i>
+                        <p>Enhancing Your Natural Beauty</p>
+                        <span>Confidence in Every Blink</span>
                     </div>
                 </div>
             </div>
@@ -204,7 +201,7 @@
         </div>
     </section>
 
-    <!-- ==================== GALLERY SECTION (NEW) ==================== -->
+    <!-- ==================== GALLERY SECTION ==================== -->
     <section class="gallery" id="gallery">
         <div class="container">
             <div class="section-header text-center">
@@ -213,21 +210,17 @@
                 <p class="section-desc">Browse through our portfolio of stunning lash and brow transformations.</p>
             </div>
 
-            <!-- Gallery Filter Buttons -->
             <div class="gallery-filters">
                 <button class="filter-btn active" data-filter="all">All</button>
                 <button class="filter-btn" data-filter="lashes">Lash Extensions</button>
                 <button class="filter-btn" data-filter="brows">Brow Services</button>
-               <!-- <button class="filter-btn" data-filter="bridal">Bridal</button> -->
+                <button class="filter-btn" data-filter="bridal">Bridal</button>
             </div>
 
-            <!-- Gallery Grid -->
             <div class="gallery-grid" id="galleryGrid">
-                <!-- Gallery items will be populated by JavaScript -->
-                <!-- Each item has data-category for filtering -->
+                <!-- Gallery items populated by JavaScript -->
             </div>
 
-            <!-- View More Button -->
             <div class="gallery-more">
                 <button class="btn btn-outline" id="loadMoreGallery">
                     <i class="fas fa-plus-circle"></i> Load More
@@ -236,7 +229,7 @@
         </div>
     </section>
 
-    <!-- ==================== LIGHTBOX (NEW) ==================== -->
+    <!-- ==================== LIGHTBOX ==================== -->
     <div class="lightbox" id="lightbox">
         <button class="lightbox-close" id="lightboxClose">
             <i class="fas fa-times"></i>
@@ -257,7 +250,6 @@
     <section class="about-training" id="training">
         <div class="container">
             <div class="two-col-grid">
-                <!-- What Makes Us Different -->
                 <div class="about-content">
                     <span class="section-subtitle">Our Philosophy</span>
                     <h2 class="section-title">What Makes Us <span>Different</span></h2>
@@ -278,7 +270,6 @@
                     </div>
                 </div>
 
-                <!-- Training Program -->
                 <div class="training-card">
                     <div class="training-icon">
                         <i class="fas fa-graduation-cap"></i>
@@ -302,80 +293,80 @@
         </div>
     </section>
 
-<!-- ==================== CUSTOMER REVIEWS SECTION ==================== -->
-<section class="reviews" id="reviews">
-    <div class="container">
-        <div class="section-header text-center">
-            <span class="section-subtitle">Testimonials</span>
-            <h2 class="section-title">What Our <span>Clients Say</span></h2>
-            <p class="section-desc">Real reviews from real clients who love their VeeBeautyBar experience.</p>
-        </div>
+    <!-- ==================== CUSTOMER REVIEWS SECTION ==================== -->
+    <section class="reviews" id="reviews">
+        <div class="container">
+            <div class="section-header text-center">
+                <span class="section-subtitle">Testimonials</span>
+                <h2 class="section-title">What Our <span>Clients Say</span></h2>
+                <p class="section-desc">Real reviews from real clients who love their VeeBeautyBar experience.</p>
+            </div>
 
-        <!-- Reviews Display -->
-        <div class="reviews-grid" id="reviewsGrid">
-            <!-- Reviews will be populated by JavaScript -->
-        </div>
+            <!-- Reviews Display -->
+            <div class="reviews-grid" id="reviewsGrid">
+                <!-- Reviews will be populated by JavaScript -->
+            </div>
 
-        <!-- Review Form -->
-        <div class="review-form-container">
-            <h3>Share Your Experience</h3>
-            <p>Have you visited VeeBeautyBar? We'd love to hear about your experience!</p>
-            
-            <form id="reviewForm" class="review-form">
-                <div class="form-row">
+            <!-- Review Form -->
+            <div class="review-form-container">
+                <h3>Share Your Experience</h3>
+                <p>Have you visited VeeBeautyBar? We'd love to hear about your experience!</p>
+                
+                <form id="reviewForm" class="review-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="reviewerName">Your Name *</label>
+                            <input type="text" id="reviewerName" placeholder="e.g., Sarah Johnson" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="reviewerService">Service Received *</label>
+                            <select id="reviewerService" required>
+                                <option value="">Select a service...</option>
+                                <option value="Classic Lash Set">Classic Lash Set</option>
+                                <option value="Hybrid Lash Set">Hybrid Lash Set</option>
+                                <option value="Volume Lash Set">Volume Lash Set</option>
+                                <option value="Customized Lash Set">Customized Lash Set</option>
+                                <option value="Lash Refill">Lash Refill</option>
+                                <option value="Brow Lamination">Brow Lamination</option>
+                                <option value="Brow Lamination & Tint">Brow Lamination & Tint</option>
+                                <option value="Brow Grooming">Brow Grooming</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+
                     <div class="form-group">
-                        <label for="reviewerName">Your Name *</label>
-                        <input type="text" id="reviewerName" placeholder="e.g., Sarah Johnson" required>
+                        <label>Rating *</label>
+                        <div class="star-rating" id="starRating">
+                            <i class="fas fa-star" data-rating="1"></i>
+                            <i class="fas fa-star" data-rating="2"></i>
+                            <i class="fas fa-star" data-rating="3"></i>
+                            <i class="fas fa-star" data-rating="4"></i>
+                            <i class="fas fa-star" data-rating="5"></i>
+                        </div>
+                        <input type="hidden" id="reviewRatingValue" value="0">
+                        <span class="rating-text" id="ratingText">Select a rating</span>
                     </div>
+
                     <div class="form-group">
-                        <label for="reviewerService">Service Received *</label>
-                        <select id="reviewerService" required>
-                            <option value="">Select a service...</option>
-                            <option value="Classic Lash Set">Classic Lash Set</option>
-                            <option value="Hybrid Lash Set">Hybrid Lash Set</option>
-                            <option value="Volume Lash Set">Volume Lash Set</option>
-                            <option value="Customized Lash Set">Customized Lash Set</option>
-                            <option value="Lash Refill">Lash Refill</option>
-                            <option value="Brow Lamination">Brow Lamination</option>
-                            <option value="Brow Lamination & Tint">Brow Lamination & Tint</option>
-                            <option value="Brow Grooming">Brow Grooming</option>
-                            <option value="Other">Other</option>
-                        </select>
+                        <label for="reviewText">Your Review *</label>
+                        <textarea id="reviewText" rows="4" placeholder="Tell us about your experience at VeeBeautyBar..." required></textarea>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <label>Rating *</label>
-                    <div class="star-rating" id="starRating">
-                        <i class="fas fa-star" data-rating="1"></i>
-                        <i class="fas fa-star" data-rating="2"></i>
-                        <i class="fas fa-star" data-rating="3"></i>
-                        <i class="fas fa-star" data-rating="4"></i>
-                        <i class="fas fa-star" data-rating="5"></i>
+                    <div class="form-group">
+                        <label for="reviewImage">Upload a Photo (Optional)</label>
+                        <input type="file" id="reviewImage" accept="image/*">
+                        <small>Upload a photo of your lashes or brows to share with your review!</small>
                     </div>
-                    <input type="hidden" id="reviewRatingValue" value="0" required>
-                    <span class="rating-text" id="ratingText">Select a rating</span>
-                </div>
 
-                <div class="form-group">
-                    <label for="reviewText">Your Review *</label>
-                    <textarea id="reviewText" rows="4" placeholder="Tell us about your experience at VeeBeautyBar..." required></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label for="reviewImage">Upload a Photo (Optional)</label>
-                    <input type="file" id="reviewImage" accept="image/*">
-                    <small>Upload a photo of your lashes or brows to share with your review!</small>
-                </div>
-
-                <button type="submit" class="btn btn-primary">
-                    <i class="fas fa-paper-plane"></i> Submit Review
-                </button>
-            </form>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-paper-plane"></i> Submit Review
+                    </button>
+                </form>
+            </div>
         </div>
-    </div>
-</section>
-    
+    </section>
+
     <!-- ==================== CONTACT & BOOKING ==================== -->
     <section class="contact" id="contact">
         <div class="container">
@@ -386,7 +377,6 @@
             </div>
 
             <div class="contact-grid">
-                <!-- Contact Info -->
                 <div class="contact-info">
                     <div class="info-card">
                         <h4><i class="fas fa-clock"></i> Working Hours</h4>
@@ -406,7 +396,6 @@
                         <p><i class="fab fa-tiktok"></i> @veebeautybarr.ng</p>
                     </div>
 
-                    <!-- Booking Policy -->
                     <div class="policy-card">
                         <h4><i class="fas fa-info-circle"></i> Booking Policy</h4>
                         <ul>
@@ -417,14 +406,12 @@
                     </div>
                 </div>
 
-                <!-- Booking Buttons -->
                 <div class="booking-card" id="booking">
                     <h3>Book Your Appointment</h3>
                     <p>Choose your preferred booking method:</p>
                     
                     <div class="booking-options">
-                        <!-- Google Form -->
-                        <a href="https://forms.gle/8yk9vmaCeE7C7nF67" 
+                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdummyformviewform" 
                            target="_blank" 
                            class="booking-btn google-btn">
                             <i class="fab fa-google"></i>
@@ -432,7 +419,6 @@
                             <small>Fill out our booking form</small>
                         </a>
 
-                        <!-- WhatsApp -->
                         <a href="https://wa.me/2349061589292?text=Hello%20VeeBeautyBar%2C%20I%20want%20to%20book%20an%20appointment" 
                            target="_blank" 
                            class="booking-btn whatsapp-btn">
@@ -441,7 +427,6 @@
                             <small>Chat with us directly</small>
                         </a>
 
-                        <!-- Call -->
                         <a href="tel:+2349061589292" 
                            class="booking-btn call-btn">
                             <i class="fas fa-phone"></i>
@@ -474,6 +459,7 @@
                     <a href="#services">Services</a>
                     <a href="#gallery">Gallery</a>
                     <a href="#about">About</a>
+                    <a href="#reviews">Reviews</a>
                     <a href="#training">Training</a>
                     <a href="#contact">Contact</a>
                 </div>
@@ -496,7 +482,7 @@
 
             <div class="footer-bottom">
                 <p>&copy; 2026 VeeBeautyBar. All rights reserved.</p>
-                <p>Made with <i class="fas fa-heart" style="color: #F8BBD0;"></i> in Abuja by Ojnium embedded labs ojnium@gmail.com</p>
+                <p>Made with <i class="fas fa-heart" style="color: #F8BBD0;"></i> in Abuja</p>
             </div>
         </div>
     </footer>
