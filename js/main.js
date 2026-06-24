@@ -57,24 +57,24 @@ document.addEventListener('DOMContentLoaded', function() {
     // ============================================
     const galleryData = [
         // Lash Extensions
-        { id: 1, title: 'Classic Lash Set', category: 'lashes', image: 'assets/images/gallery/Lash-1.jpeg' },
-        { id: 2, title: 'Hybrid Lash Set', category: 'lashes', image: 'assets/images/gallery/Lash-2.jfif' },
-        { id: 3, title: 'Volume Lash Set', category: 'lashes', image: 'assets/images/gallery/Lash-3.jfif' },
-        { id: 4, title: 'Wispy Lash Effect', category: 'lashes', image: 'assets/images/gallery/Lash-4.jfif' },
-        { id: 5, title: 'Custom Lash Design', category: 'lashes', image: 'assets/images/gallery/Lash-5.jfif' },
-        { id: 6, title: 'Bottom Lashes', category: 'lashes', image: 'assets/images/gallery/Lash-6.jfif' },
+        { id: 1, title: 'Classic Lash Set', category: 'lashes', image: 'Lash-1.jpeg' },
+        { id: 2, title: 'Hybrid Lash Set', category: 'lashes', image: 'Lash-2.jfif' },
+        { id: 3, title: 'Volume Lash Set', category: 'lashes', image: 'Lash-3.jfif' },
+        { id: 4, title: 'Wispy Lash Effect', category: 'lashes', image: 'Lash-4.jfif' },
+        { id: 5, title: 'Custom Lash Design', category: 'lashes', image: 'Lash-5.jfif' },
+        { id: 6, title: 'Bottom Lashes', category: 'lashes', image: 'Lash-6.jfif' },
         
         // Brow Services
-        { id: 7, title: 'Brow Lamination', category: 'brows', image: 'assets/images/gallery/brow-1.jpg' },
-        { id: 8, title: 'Brow Lamination & Tint', category: 'brows', image: 'assets/images/gallery/brow-2.jpg' },
-        { id: 9, title: 'Brow Grooming', category: 'brows', image: 'assets/images/gallery/brow-3.jpg' },
-        { id: 10, title: 'Brow Shaping', category: 'brows', image: 'assets/images/gallery/brow-4.jpg' },
+        { id: 7, title: 'Brow Lamination', category: 'brows', image: 'https://placehold.co/400x400/F8BBD0/000000?text=Brow+Lamination' },
+        { id: 8, title: 'Brow Lamination & Tint', category: 'brows', image: 'https://placehold.co/400x400/F8BBD0/000000?text=Brow+%26+Tint' },
+        { id: 9, title: 'Brow Grooming', category: 'brows', image: 'https://placehold.co/400x400/F8BBD0/000000?text=Brow+Grooming' },
+        { id: 10, title: 'Brow Shaping', category: 'brows', image: 'https://placehold.co/400x400/F8BBD0/000000?text=Brow+Shaping' },
         
         // Bridal
-       // { id: 11, title: 'Bridal Lash Set', category: 'bridal', image: 'assets/images/gallery/bridal-1.jpg' },
-       // { id: 12, title: 'Bridal Makeup & Lashes', category: 'bridal', image: 'assets/images/gallery/bridal-2.jpg' },
-        //{ id: 13, title: 'Wedding Day Glam', category: 'bridal', image: 'assets/images/gallery/bridal-3.jpg' },
-        //{ id: 14, title: 'Bridal Brow & Lash', category: 'bridal', image: 'assets/images/gallery/bridal-4.jpg' },
+        { id: 11, title: 'Bridal Lash Set', category: 'bridal', image: 'https://placehold.co/400x400/F8BBD0/000000?text=Bridal+Lashes' },
+        { id: 12, title: 'Bridal Makeup & Lashes', category: 'bridal', image: 'https://placehold.co/400x400/F8BBD0/000000?text=Bridal+Makeup' },
+        { id: 13, title: 'Wedding Day Glam', category: 'bridal', image: 'https://placehold.co/400x400/F8BBD0/000000?text=Wedding+Glam' },
+        { id: 14, title: 'Bridal Brow & Lash', category: 'bridal', image: 'https://placehold.co/400x400/F8BBD0/000000?text=Bridal+Brow' },
     ];
 
     // ===== RENDER GALLERY =====
@@ -104,7 +104,6 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
         `).join('');
 
-        // Add click listeners to gallery items
         document.querySelectorAll('.gallery-item').forEach(item => {
             item.addEventListener('click', function() {
                 const id = parseInt(this.dataset.id);
@@ -115,7 +114,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
 
-        // Show/hide load more button
         if (loadMoreBtn) {
             const totalFiltered = filter === 'all' ? galleryData.length : galleryData.filter(item => item.category === filter).length;
             if (count >= totalFiltered) {
@@ -130,13 +128,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const filterBtns = document.querySelectorAll('.filter-btn');
     filterBtns.forEach(btn => {
         btn.addEventListener('click', function() {
-            // Update active state
             filterBtns.forEach(b => b.classList.remove('active'));
             this.classList.add('active');
-            
-            // Apply filter
             currentFilter = this.dataset.filter;
-            visibleCount = 6; // Reset visible count on filter change
+            visibleCount = 6;
             renderGalleryItems(currentFilter, visibleCount);
         });
     });
@@ -149,7 +144,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Initial render
     renderGalleryItems('all', visibleCount);
 
     // ============================================
@@ -191,7 +185,6 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (filtered.length === 0) return;
         
-        // Find current item in filtered list
         const currentItem = galleryData[currentIndex];
         const filteredIndex = filtered.findIndex(item => item.id === currentItem.id);
         
@@ -210,7 +203,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Lightbox event listeners
     if (lightboxClose) {
         lightboxClose.addEventListener('click', closeLightbox);
     }
@@ -229,14 +221,12 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Close lightbox on background click
     lightbox.addEventListener('click', function(e) {
         if (e.target === this) {
             closeLightbox();
         }
     });
 
-    // Keyboard navigation
     document.addEventListener('keydown', function(e) {
         if (!lightbox.classList.contains('active')) return;
         
@@ -248,6 +238,289 @@ document.addEventListener('DOMContentLoaded', function() {
             navigateLightbox(1);
         }
     });
+
+    // ============================================
+    // CUSTOMER REVIEWS - COMPLETE WORKING VERSION
+    // ============================================
+
+    // Initialize reviews from localStorage or use defaults
+    let reviews = [];
+
+    // Load reviews from localStorage
+    function loadReviews() {
+        const stored = localStorage.getItem('veebeautybar_reviews');
+        if (stored) {
+            try {
+                reviews = JSON.parse(stored);
+            } catch (e) {
+                reviews = getDefaultReviews();
+            }
+        } else {
+            reviews = getDefaultReviews();
+        }
+        return reviews;
+    }
+
+    // Default reviews (sample data)
+    function getDefaultReviews() {
+        return [
+            {
+                id: 1,
+                name: 'Chioma Okafor',
+                service: 'Volume Lash Set',
+                rating: 5,
+                text: 'Absolutely love my lashes! VeeBeautyBar did an amazing job. The volume set is so natural and beautiful. I\'ve gotten so many compliments! Definitely coming back.',
+                image: null,
+                date: new Date('2026-06-20').toISOString()
+            },
+            {
+                id: 2,
+                name: 'Aisha Mohammed',
+                service: 'Brow Lamination',
+                rating: 5,
+                text: 'Best brow lamination in Abuja! My brows have never looked this good. The service was professional and the results lasted for weeks. Highly recommend!',
+                image: null,
+                date: new Date('2026-06-18').toISOString()
+            },
+            {
+                id: 3,
+                name: 'Tolu Adebayo',
+                service: 'Hybrid Lash Set',
+                rating: 4,
+                text: 'Great experience at VeeBeautyBar. The hybrid lashes are perfect for my wedding coming up. The staff was very professional and made me feel comfortable.',
+                image: null,
+                date: new Date('2026-06-15').toISOString()
+            }
+        ];
+    }
+
+    // Save reviews to localStorage
+    function saveReviews() {
+        localStorage.setItem('veebeautybar_reviews', JSON.stringify(reviews));
+    }
+
+    // Render reviews
+    function renderReviews() {
+        const grid = document.getElementById('reviewsGrid');
+        if (!grid) return;
+
+        if (reviews.length === 0) {
+            grid.innerHTML = `
+                <div class="no-reviews">
+                    <i class="fas fa-star"></i>
+                    <h3>No Reviews Yet</h3>
+                    <p>Be the first to share your VeeBeautyBar experience!</p>
+                </div>
+            `;
+            return;
+        }
+
+        // Sort by date (newest first)
+        const sorted = [...reviews].sort((a, b) => new Date(b.date) - new Date(a.date));
+
+        grid.innerHTML = sorted.map(review => `
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="review-avatar">${review.name.charAt(0).toUpperCase()}</div>
+                    <div class="review-user-info">
+                        <h4>${escapeHtml(review.name)}</h4>
+                        <span class="review-service">${escapeHtml(review.service)}</span>
+                    </div>
+                    <div class="review-stars">${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}</div>
+                </div>
+                <p class="review-text">${escapeHtml(review.text)}</p>
+                ${review.image ? `<div class="review-image"><img src="${review.image}" alt="Review photo"></div>` : ''}
+                <span class="review-date">${formatDate(review.date)}</span>
+            </div>
+        `).join('');
+    }
+
+    // Helper: Escape HTML
+    function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+
+    // Helper: Format date
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('en-NG', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+    }
+
+    // ============================================
+    // STAR RATING - FIXED VERSION
+    // ============================================
+
+    function setupStarRating() {
+        const stars = document.querySelectorAll('.star-rating i');
+        const ratingInput = document.getElementById('reviewRatingValue');
+        const ratingText = document.getElementById('ratingText');
+        
+        if (!stars.length) return;
+
+        // Rating labels with emojis
+        const ratingLabels = {
+            0: 'Select a rating',
+            1: 'Poor 😕',
+            2: 'Fair 😐',
+            3: 'Good 🙂',
+            4: 'Very Good 😊',
+            5: 'Excellent 🤩'
+        };
+
+        // Function to update stars based on rating
+        function updateStars(rating) {
+            stars.forEach(star => {
+                const starRating = parseInt(star.dataset.rating);
+                if (starRating <= rating) {
+                    star.classList.add('active');
+                    star.style.color = '#FFB800';
+                } else {
+                    star.classList.remove('active');
+                    star.style.color = '#ddd';
+                }
+            });
+        }
+
+        // Click event - set rating
+        stars.forEach(star => {
+            star.addEventListener('click', function() {
+                const rating = parseInt(this.dataset.rating);
+                ratingInput.value = rating;
+                updateStars(rating);
+                ratingText.textContent = ratingLabels[rating] || 'Select a rating';
+            });
+
+            // Hover effect
+            star.addEventListener('mouseenter', function() {
+                const rating = parseInt(this.dataset.rating);
+                stars.forEach(s => {
+                    const starRating = parseInt(s.dataset.rating);
+                    if (starRating <= rating) {
+                        s.style.color = '#FFB800';
+                    } else {
+                        s.style.color = '#ddd';
+                    }
+                });
+            });
+
+            star.addEventListener('mouseleave', function() {
+                const currentRating = parseInt(ratingInput.value) || 0;
+                updateStars(currentRating);
+            });
+        });
+
+        // Initialize with default (no rating)
+        updateStars(0);
+        ratingText.textContent = ratingLabels[0];
+    }
+
+    // ============================================
+    // REVIEW FORM SUBMISSION
+    // ============================================
+
+    function setupReviewForm() {
+        const form = document.getElementById('reviewForm');
+        if (!form) return;
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Get form data
+            const name = document.getElementById('reviewerName').value.trim();
+            const service = document.getElementById('reviewerService').value;
+            const rating = parseInt(document.getElementById('reviewRatingValue').value);
+            const text = document.getElementById('reviewText').value.trim();
+            const imageFile = document.getElementById('reviewImage').files[0];
+
+            // Validate
+            if (!name || !service || !rating || !text) {
+                alert('Please fill in all required fields (Name, Service, Rating, and Review)');
+                return;
+            }
+
+            // Create review object
+            const newReview = {
+                id: Date.now(),
+                name: name,
+                service: service,
+                rating: rating,
+                text: text,
+                image: null,
+                date: new Date().toISOString()
+            };
+
+            // Handle image upload
+            if (imageFile) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    newReview.image = e.target.result;
+                    addReview(newReview);
+                };
+                reader.readAsDataURL(imageFile);
+            } else {
+                addReview(newReview);
+            }
+        });
+    }
+
+    // Add review and update UI
+    function addReview(review) {
+        reviews.unshift(review);
+        saveReviews();
+        renderReviews();
+        
+        // Show success message
+        const form = document.getElementById('reviewForm');
+        const container = form.parentElement;
+        
+        // Remove any existing success message
+        const existingSuccess = container.querySelector('.review-success');
+        if (existingSuccess) {
+            existingSuccess.remove();
+        }
+        
+        const success = document.createElement('div');
+        success.className = 'review-success show';
+        success.innerHTML = `
+            <i class="fas fa-check-circle"></i>
+            <h3>Thank You for Your Review! 🎉</h3>
+            <p>Your feedback means the world to us at VeeBeautyBar.</p>
+            <button class="btn btn-outline" onclick="location.reload();">
+                <i class="fas fa-plus"></i> Write Another Review
+            </button>
+        `;
+        
+        form.style.display = 'none';
+        container.appendChild(success);
+        
+        // Reset form
+        form.reset();
+        document.getElementById('reviewRatingValue').value = '0';
+        document.querySelectorAll('.star-rating i').forEach(s => {
+            s.classList.remove('active');
+            s.style.color = '#ddd';
+        });
+        document.getElementById('ratingText').textContent = 'Select a rating';
+        
+        // Scroll to reviews
+        document.getElementById('reviewsGrid').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // ============================================
+    // INITIALIZE REVIEWS ON PAGE LOAD
+    // ============================================
+
+    // Initialize reviews
+    loadReviews();
+    renderReviews();
+    setupStarRating();
+    setupReviewForm();
 
     // ============================================
     // WHATSAPP BUTTON TRACKING
