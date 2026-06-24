@@ -57,12 +57,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // ============================================
     const galleryData = [
         // Lash Extensions
-        { id: 1, title: 'Classic Lash Set', category: 'lashes', image: 'Lash-1.jpeg' },
-        { id: 2, title: 'Hybrid Lash Set', category: 'lashes', image: 'assets/images/gallery/Lash-2.jfif' },
-        { id: 3, title: 'Volume Lash Set', category: 'lashes', image: 'assets/images/gallery/Lash-3.jfif' },
-        { id: 4, title: 'Wispy Lash Effect', category: 'lashes', image: 'assets/images/gallery/Lash-4.jfif' },
-        { id: 5, title: 'Custom Lash Design', category: 'lashes', image: 'assets/images/gallery/Lash-5.jfif' },
-        { id: 6, title: 'Bottom Lashes', category: 'lashes', image: 'assets/images/gallery/Lash-6.jfif' },
+        { id: 1, title: 'Classic Lash Set', category: 'lashes', image: 'assets/images/gallery/lash-1.jpeg' },
+        { id: 2, title: 'Hybrid Lash Set', category: 'lashes', image: 'assets/images/gallery/lash-2.jfif' },
+        { id: 3, title: 'Volume Lash Set', category: 'lashes', image: 'assets/images/gallery/lash-3.jfif' },
+        { id: 4, title: 'Wispy Lash Effect', category: 'lashes', image: 'assets/images/gallery/lash-4.jfif' },
+        { id: 5, title: 'Custom Lash Design', category: 'lashes', image: 'assets/images/gallery/lash-5.jfif' },
+        { id: 6, title: 'Bottom Lashes', category: 'lashes', image: 'assets/images/gallery/lash-6.jfif' },
         
         // Brow Services
         { id: 7, title: 'Brow Lamination', category: 'brows', image: 'assets/images/gallery/brow-1.jpg' },
@@ -71,11 +71,11 @@ document.addEventListener('DOMContentLoaded', function() {
         { id: 10, title: 'Brow Shaping', category: 'brows', image: 'assets/images/gallery/brow-4.jpg' },
         
         // Bridal
-      //  { id: 11, title: 'Bridal Lash Set', category: 'bridal', image: 'assets/images/gallery/bridal-1.jpg' },
+       // { id: 11, title: 'Bridal Lash Set', category: 'bridal', image: 'assets/images/gallery/bridal-1.jpg' },
        // { id: 12, title: 'Bridal Makeup & Lashes', category: 'bridal', image: 'assets/images/gallery/bridal-2.jpg' },
-      //  { id: 13, title: 'Wedding Day Glam', category: 'bridal', image: 'assets/images/gallery/bridal-3.jpg' },
-       // { id: 14, title: 'Bridal Brow & Lash', category: 'bridal', image: 'assets/images/gallery/bridal-4.jpg' },
-  //  ];
+        //{ id: 13, title: 'Wedding Day Glam', category: 'bridal', image: 'assets/images/gallery/bridal-3.jpg' },
+        //{ id: 14, title: 'Bridal Brow & Lash', category: 'bridal', image: 'assets/images/gallery/bridal-4.jpg' },
+    ];
 
     // ===== RENDER GALLERY =====
     const galleryGrid = document.getElementById('galleryGrid');
@@ -272,5 +272,3 @@ document.addEventListener('DOMContentLoaded', function() {
 
     console.log('VeeBeautyBar website loaded successfully! ✨');
 });
-
-
