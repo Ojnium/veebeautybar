@@ -272,3 +272,250 @@ document.addEventListener('DOMContentLoaded', function() {
 
     console.log('VeeBeautyBar website loaded successfully! ✨');
 });
+
+
+// ============================================
+// CUSTOMER REVIEWS
+// ============================================
+
+// Initialize reviews from localStorage or use defaults
+let reviews = [];
+
+// Load reviews from localStorage
+function loadReviews() {
+    const stored = localStorage.getItem('veebeautybar_reviews');
+    if (stored) {
+        try {
+            reviews = JSON.parse(stored);
+        } catch (e) {
+            reviews = getDefaultReviews();
+        }
+    } else {
+        reviews = getDefaultReviews();
+    }
+    return reviews;
+}
+
+// Default reviews (sample data)
+function getDefaultReviews() {
+    return [
+        {
+            id: 1,
+            name: 'Chioma Okafor',
+            service: 'Volume Lash Set',
+            rating: 5,
+            text: 'Absolutely love my lashes! VeeBeautyBar did an amazing job. The volume set is so natural and beautiful. I\'ve gotten so many compliments! Definitely coming back.',
+            image: null,
+            date: new Date('2026-06-20').toISOString()
+        },
+        {
+            id: 2,
+            name: 'Aisha Mohammed',
+            service: 'Brow Lamination',
+            rating: 5,
+            text: 'Best brow lamination in Abuja! My brows have never looked this good. The service was professional and the results lasted for weeks. Highly recommend!',
+            image: null,
+            date: new Date('2026-06-18').toISOString()
+        },
+        {
+            id: 3,
+            name: 'Tolu Adebayo',
+            service: 'Hybrid Lash Set',
+            rating: 4,
+            text: 'Great experience at VeeBeautyBar. The hybrid lashes are perfect for my wedding coming up. The staff was very professional and made me feel comfortable.',
+            image: null,
+            date: new Date('2026-06-15').toISOString()
+        }
+    ];
+}
+
+// Save reviews to localStorage
+function saveReviews() {
+    localStorage.setItem('veebeautybar_reviews', JSON.stringify(reviews));
+}
+
+// Render reviews
+function renderReviews() {
+    const grid = document.getElementById('reviewsGrid');
+    if (!grid) return;
+
+    if (reviews.length === 0) {
+        grid.innerHTML = `
+            <div class="no-reviews">
+                <i class="fas fa-star"></i>
+                <h3>No Reviews Yet</h3>
+                <p>Be the first to share your VeeBeautyBar experience!</p>
+            </div>
+        `;
+        return;
+    }
+
+    // Sort by date (newest first)
+    const sorted = [...reviews].sort((a, b) => new Date(b.date) - new Date(a.date));
+
+    grid.innerHTML = sorted.map(review => `
+        <div class="review-card">
+            <div class="review-header">
+                <div class="review-avatar">${review.name.charAt(0).toUpperCase()}</div>
+                <div class="review-user-info">
+                    <h4>${escapeHtml(review.name)}</h4>
+                    <span class="review-service">${escapeHtml(review.service)}</span>
+                </div>
+                <div class="review-stars">${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}</div>
+            </div>
+            <p class="review-text">${escapeHtml(review.text)}</p>
+            ${review.image ? `<div class="review-image"><img src="${review.image}" alt="Review photo"></div>` : ''}
+            <span class="review-date">${formatDate(review.date)}</span>
+        </div>
+    `).join('');
+}
+
+// Helper: Escape HTML
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+// Helper: Format date
+function formatDate(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-NG', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    });
+}
+
+// Handle star rating
+function setupStarRating() {
+    const stars = document.querySelectorAll('.star-rating i');
+    const ratingInput = document.getElementById('reviewRatingValue');
+    const ratingText = document.getElementById('ratingText');
+
+    if (!stars.length) return;
+
+    stars.forEach(star => {
+        star.addEventListener('click', function() {
+            const rating = parseInt(this.dataset.rating);
+            ratingInput.value = rating;
+            
+            // Update stars
+            stars.forEach(s => {
+                s.classList.toggle('active', parseInt(s.dataset.rating) <= rating);
+            });
+
+            // Update rating text
+            const texts = ['', 'Poor', 'Fair', 'Good', 'Very Good', 'Excellent'];
+            ratingText.textContent = texts[rating] || 'Select a rating';
+        });
+
+        star.addEventListener('mouseenter', function() {
+            const rating = parseInt(this.dataset.rating);
+            stars.forEach(s => {
+                s.style.color = parseInt(s.dataset.rating) <= rating ? '#FFB800' : '#ddd';
+            });
+        });
+
+        star.addEventListener('mouseleave', function() {
+            const currentRating = parseInt(ratingInput.value);
+            stars.forEach(s => {
+                s.style.color = parseInt(s.dataset.rating) <= currentRating ? '#FFB800' : '#ddd';
+            });
+        });
+    });
+}
+
+// Handle review submission
+function setupReviewForm() {
+    const form = document.getElementById('reviewForm');
+    if (!form) return;
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        // Get form data
+        const name = document.getElementById('reviewerName').value.trim();
+        const service = document.getElementById('reviewerService').value;
+        const rating = parseInt(document.getElementById('reviewRatingValue').value);
+        const text = document.getElementById('reviewText').value.trim();
+        const imageFile = document.getElementById('reviewImage').files[0];
+
+        // Validate
+        if (!name || !service || !rating || !text) {
+            alert('Please fill in all required fields (Name, Service, Rating, and Review)');
+            return;
+        }
+
+        // Create review object
+        const newReview = {
+            id: Date.now(),
+            name: name,
+            service: service,
+            rating: rating,
+            text: text,
+            image: null,
+            date: new Date().toISOString()
+        };
+
+        // Handle image upload
+        if (imageFile) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                newReview.image = e.target.result;
+                addReview(newReview);
+            };
+            reader.readAsDataURL(imageFile);
+        } else {
+            addReview(newReview);
+        }
+    });
+}
+
+// Add review and update UI
+function addReview(review) {
+    reviews.unshift(review);
+    saveReviews();
+    renderReviews();
+    
+    // Show success message
+    const form = document.getElementById('reviewForm');
+    const container = form.parentElement;
+    
+    const success = document.createElement('div');
+    success.className = 'review-success show';
+    success.innerHTML = `
+        <i class="fas fa-check-circle"></i>
+        <h3>Thank You for Your Review! 🎉</h3>
+        <p>Your feedback means the world to us at VeeBeautyBar.</p>
+        <button class="btn btn-outline" onclick="this.parentElement.remove(); document.getElementById('reviewForm').reset(); location.reload();">
+            <i class="fas fa-plus"></i> Write Another Review
+        </button>
+    `;
+    
+    form.style.display = 'none';
+    container.appendChild(success);
+    
+    // Reset form
+    form.reset();
+    document.getElementById('reviewRatingValue').value = '0';
+    document.querySelectorAll('.star-rating i').forEach(s => s.classList.remove('active'));
+    document.getElementById('ratingText').textContent = 'Select a rating';
+    
+    // Scroll to reviews
+    document.getElementById('reviewsGrid').scrollIntoView({ behavior: 'smooth' });
+}
+
+// Initialize reviews on page load
+document.addEventListener('DOMContentLoaded', function() {
+    loadReviews();
+    renderReviews();
+    setupStarRating();
+    setupReviewForm();
+});
+
+
+
+
+
+
