@@ -71,11 +71,11 @@ document.addEventListener('DOMContentLoaded', function() {
         { id: 10, title: 'Brow Shaping', category: 'brows', image: 'assets/images/gallery/brow-4.jpg' },
         
         // Bridal
-        { id: 11, title: 'Bridal Lash Set', category: 'bridal', image: 'assets/images/gallery/bridal-1.jpg' },
-        { id: 12, title: 'Bridal Makeup & Lashes', category: 'bridal', image: 'assets/images/gallery/bridal-2.jpg' },
-        { id: 13, title: 'Wedding Day Glam', category: 'bridal', image: 'assets/images/gallery/bridal-3.jpg' },
-        { id: 14, title: 'Bridal Brow & Lash', category: 'bridal', image: 'assets/images/gallery/bridal-4.jpg' },
-    ];
+      //  { id: 11, title: 'Bridal Lash Set', category: 'bridal', image: 'assets/images/gallery/bridal-1.jpg' },
+       // { id: 12, title: 'Bridal Makeup & Lashes', category: 'bridal', image: 'assets/images/gallery/bridal-2.jpg' },
+      //  { id: 13, title: 'Wedding Day Glam', category: 'bridal', image: 'assets/images/gallery/bridal-3.jpg' },
+       // { id: 14, title: 'Bridal Brow & Lash', category: 'bridal', image: 'assets/images/gallery/bridal-4.jpg' },
+  //  ];
 
     // ===== RENDER GALLERY =====
     const galleryGrid = document.getElementById('galleryGrid');
